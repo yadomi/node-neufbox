@@ -1,14 +1,19 @@
 {
-  "name": "NeufJS",
-  "version": "1.0.0",
+  "name": "node-neufbox",
+  "version": "0.0.1",
   "description": "API for Neufbox",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Felix Yadomi",
   "license": "ISC",
   "dependencies": {
+    "request": "^2.51.0",
     "xml2js": "^0.4.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yadomi/node-neufbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yadomi/node-neufbox/issues"
+  },
+  "homepage": "https://github.com/yadomi/node-neufbox"
 }
