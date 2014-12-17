@@ -106,42 +106,58 @@ Neufbox.prototype.getDnsHostList = function(cb){
             return false;
         }
         var dnsList = [];
-        data.rsp.dns.forEach(function(item){
-            dnsList.push(item.$);
-        });
+        if(data.rsp.dns){
+            data.rsp.dns.forEach(function(item){
+                dnsList.push(item.$);
+            });
+        }
         cb(null, dnsList);
     }
 }
 
 //TODO
 Neufbox.prototype.deleteDnsHost = function(params, cb){
+    var _this = this;
     var qs = {
         method : 'lan.deleteDnsHost',
         token  : this.token
     };
     for (var attrname in qs) { params[attrname] = qs[attrname]; }
-    console.log(params);
     request.post( {
         url : this.url + this.version,
         qs  : params
         }, function(err,res,xml){
-            console.log(xml);
+            _this.toObject(xml, function(data){
+                if(data.rsp.$.stat === 'fail'){
+                    typeof cb === 'function' && cb(data.rsp.err[0].$, null);
+                }
+                else {
+                    typeof cb === 'function' && cb(null, {stat: 'ok'});
+                }
+            });
     });
 }
 
 //TODO
 Neufbox.prototype.addDnsHost = function(params, cb){
+    var _this = this;
     var qs = {
         method : 'lan.addDnsHost',
         token  : this.token
     };
     for (var attrname in qs) { params[attrname] = qs[attrname]; }
-    console.log(params);
     request.post( {
         url : this.url + this.version,
         qs  : params
         }, function(err,res,xml){
-            console.log(xml);
+            _this.toObject(xml, function(data){
+                if(data.rsp.$.stat === 'fail'){
+                    typeof cb === 'function' && cb(data.rsp.err[0].$, null);
+                }
+                else {
+                    typeof cb === 'function' && cb(null, {stat: 'ok'});
+                }
+            });
     });
 }
 
@@ -154,7 +170,7 @@ Neufbox.prototype.getCurrentIP = function(cb){
 Neufbox.prototype.getClients = function(cb){
     this.getInfo(function(res){
         cb(res.info.lan[0].client);
-    })
+    });
 }
 
 Neufbox.prototype.toObject = function(xml, cb){
