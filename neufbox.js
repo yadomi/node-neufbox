@@ -5,8 +5,9 @@ var crypto = require('crypto');
 var Neufbox = function(){
     this.url = 'http://192.168.1.1';
     this.endpoints = {
-        stb : '/stb/info'
+        stb     : '/stb/info'
     };
+    this.version = '/api/1.0';
 }
 
 Neufbox.prototype.connect = function(auth, cb){
@@ -34,7 +35,7 @@ Neufbox.prototype.connect = function(auth, cb){
 Neufbox.prototype.getToken = function(cb){
     var _this = this;
     request.get( {
-        url : this.url + '/api/1.0/',
+        url : this.url + this.version,
         qs  : {method: 'auth.getToken'}
         }, function(err,res,xml){
             if(err)
@@ -50,10 +51,14 @@ Neufbox.prototype.getToken = function(cb){
     }
 }
 
+Neufbox.prototype.success = function(data){
+    return (data.rsp.$.stat === 'ok');
+}
+
 Neufbox.prototype.checkToken = function(cb){
     var _this = this;
     request.get( {
-        url : this.url + '/api/1.0',
+        url : this.url + this.version,
         qs  : {
             method : 'auth.checkToken',
             token  : this.token,
@@ -84,11 +89,10 @@ Neufbox.prototype.getInfo = function(cb){
     });
 }
 
-
 Neufbox.prototype.getDnsHostList = function(cb){
     var _this = this;
     request.get( {
-        url : this.url + '/api/1.0',
+        url : this.url + this.version,
         qs  : {
             method : 'lan.getDnsHostList',
             token  : this.token,
@@ -118,7 +122,7 @@ Neufbox.prototype.deleteDnsHost = function(params, cb){
     for (var attrname in qs) { params[attrname] = qs[attrname]; }
     console.log(params);
     request.post( {
-        url : this.url + '/api/1.0',
+        url : this.url + this.version,
         qs  : params
         }, function(err,res,xml){
             console.log(xml);
@@ -134,7 +138,7 @@ Neufbox.prototype.addDnsHost = function(params, cb){
     for (var attrname in qs) { params[attrname] = qs[attrname]; }
     console.log(params);
     request.post( {
-        url : this.url + '/api/1.0',
+        url : this.url + this.version,
         qs  : params
         }, function(err,res,xml){
             console.log(xml);
