@@ -2,7 +2,7 @@ var request = require('request');
 var parseString = require('xml2js').parseString;
 var crypto = require('crypto');
 
-function Neufbox(){
+var Neufbox = function(){
     this.url = 'http://192.168.1.1';
     this.endpoints = {
         stb : '/stb/info'
@@ -84,16 +84,29 @@ Neufbox.prototype.getInfo = function(cb){
     });
 }
 
-//TODO
+
 Neufbox.prototype.getDnsHostList = function(cb){
+    var _this = this;
     request.get( {
         url : this.url + '/api/1.0',
         qs  : {
             method : 'lan.getDnsHostList',
             token  : this.token,
         } }, function(err,res,xml){
-            console.log(xml);
+            _this.toObject(xml, parseResponse);
     });
+
+    var parseResponse = function(data){
+        if(data.rsp.$.stat === 'fail'){
+            cb(data.rsp.err[0].$, null);
+            return false;
+        }
+        var dnsList = [];
+        data.rsp.dns.forEach(function(item){
+            dnsList.push(item.$);
+        });
+        cb(null, dnsList);
+    }
 }
 
 //TODO
