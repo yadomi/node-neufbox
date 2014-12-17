@@ -2,9 +2,11 @@ var Neufbox = require('./neufbox');
 
 var nb = new Neufbox();
 
-nb.connect( {username: 'admin', password: 'zoidberg'}, function(err, res){
-    if(!err)
-        doStuff();
+nb.connect( {username: 'admin', password: 'admin'}, function(err, res){
+    if(err)
+        console.log(err);
+        return false;
+    doStuff();
 });
 
 var doStuff = function(){
