@@ -32,10 +32,12 @@ If you need authentification, use the `connect` method and provide your username
 neufbox.connect( {username: 'admin', password: 'admin'}, function(){
   //do stuff...
 }); 
+```
 
+Then you can use methods that require authentification:
+```
 nb.getDnsHostList(function(err, res){
     console.log(res);
 });
-
 ```
 
