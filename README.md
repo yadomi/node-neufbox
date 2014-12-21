@@ -22,8 +22,8 @@ var neufbox = require('node-neufbox');
 
 You can now access to public methods without authentification:
 ```
-neufbox.getCurrentIP(function(ip){
-  console.log(ip);
+nb.getInfo(function(info){
+  console.log(info.iad);
 });
 ```
 
@@ -32,5 +32,10 @@ If you need authentification, use the `connect` method and provide your username
 neufbox.connect( {username: 'admin', password: 'admin'}, function(){
   //do stuff...
 }); 
+
+nb.getDnsHostList(function(err, res){
+    console.log(res);
+});
+
 ```
 
