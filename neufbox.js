@@ -13,7 +13,7 @@ var Neufbox = function(){
 Neufbox.prototype.connect = function(auth, cb){
     var _this = this;
 
-    this.getToken(function(token){
+    this._getToken(function(token){
         _this.token = token;
         hashToken(token, auth);
     });
@@ -32,7 +32,7 @@ Neufbox.prototype.connect = function(auth, cb){
     }
 }
 
-Neufbox.prototype.getToken = function(cb){
+Neufbox.prototype._getToken = function(cb){
     var _this = this;
     request.get( {
         url : this.url + this.version,
@@ -40,7 +40,7 @@ Neufbox.prototype.getToken = function(cb){
         }, function(err,res,xml){
             if(err)
                 return err;
-            _this.toObject(xml, function(data){
+            _this._toObject(xml, function(data){
                 extractToken(data);
             });
         }
@@ -66,7 +66,7 @@ Neufbox.prototype.checkToken = function(cb){
         } }, function(err,res,xml){
             if(err)
                 return err;
-            _this.toObject(xml, function(data){
+            _this._toObject(xml, function(data){
                 parseResponse(data);
             });
     });
@@ -85,7 +85,7 @@ Neufbox.prototype.getInfo = function(cb){
     request.get(this.url + this.endpoints.stb, function(err, res, data){
         if(err)
             return err
-        _this.toObject(data, parseResponse);
+        _this._toObject(data, parseResponse);
     });
 
     var parseResponse = function(data){
@@ -101,7 +101,7 @@ Neufbox.prototype.getDnsHostList = function(cb){
             method : 'lan.getDnsHostList',
             token  : this.token,
         } }, function(err,res,xml){
-            _this.toObject(xml, parseResponse);
+            _this._toObject(xml, parseResponse);
     });
 
     var parseResponse = function(data){
@@ -131,7 +131,7 @@ Neufbox.prototype.deleteDnsHost = function(params, cb){
         url : this.url + this.version,
         qs  : params
         }, function(err,res,xml){
-            _this.toObject(xml, function(data){
+            _this._toObject(xml, function(data){
                 if(data.rsp.$.stat === 'fail'){
                     typeof cb === 'function' && cb(data.rsp.err[0].$, null);
                 }
@@ -154,7 +154,7 @@ Neufbox.prototype.addDnsHost = function(params, cb){
         url : this.url + this.version,
         qs  : params
         }, function(err,res,xml){
-            _this.toObject(xml, function(data){
+            _this._toObject(xml, function(data){
                 if(data.rsp.$.stat === 'fail'){
                     typeof cb === 'function' && cb(data.rsp.err[0].$, null);
                 }
@@ -177,7 +177,7 @@ Neufbox.prototype.getClients = function(cb){
     });
 }
 
-Neufbox.prototype.toObject = function(xml, cb){
+Neufbox.prototype._toObject = function(xml, cb){
     parseString(xml, function(err, result) {
         if (err)
             return err;
