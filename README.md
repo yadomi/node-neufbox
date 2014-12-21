@@ -29,7 +29,7 @@ neufbox.getCurrentIP(function(ip){
 
 If you need authentification, use the `connect` method and provide your username and password
 ```
-neufbox.connect( {username: 'admin', password: 'zoidberg'}, function(){
+neufbox.connect( {username: 'admin', password: 'admin'}, function(){
   //do stuff...
 }); 
 ```
