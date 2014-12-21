@@ -2,21 +2,30 @@ var Neufbox = require('./neufbox');
 
 var nb = new Neufbox();
 
-nb.connect( {username: 'admin', password: 'admin'}, function(err, res){
-    if(err)
+nb.connect( {username: 'admin', password: 'zoidberg'}, function(err, res){
+    if(err){
         console.log(err);
-        return false;
+        return false
+    }
     doStuff();
 });
 
 var doStuff = function(){
-    nb.getDnsHostList(function(err, res){
-        console.log(res);
+
+    nb.getInfo(function(info){
+        console.log(info.iad);
     });
-    nb.addDnsHost( {name : 'test.lan', ip: '192.168.1.45' }, function(err, res){
-        console.log(res);
+
+    nb.getClients(function(clients){
+        console.log(clients);
     });
-    nb.getClients(function(res){
-        console.log(res);
-    });
+
+    // nb.getDnsHostList(function(err, res){
+    //     console.log(res);
+    // });
+
+    // nb.addDnsHost( {name : 'test.lan', ip: '192.168.1.45' }, function(err, res){
+    //     console.log(res);
+    // });
+
 }

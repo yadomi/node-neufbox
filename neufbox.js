@@ -85,8 +85,12 @@ Neufbox.prototype.getInfo = function(cb){
     request.get(this.url + this.endpoints.stb, function(err, res, data){
         if(err)
             return err
-        _this.toObject(data, cb);
+        _this.toObject(data, parseResponse);
     });
+
+    var parseResponse = function(data){
+        cb(data.info);
+    }
 }
 
 Neufbox.prototype.getDnsHostList = function(cb){
@@ -169,7 +173,7 @@ Neufbox.prototype.getCurrentIP = function(cb){
 
 Neufbox.prototype.getClients = function(cb){
     this.getInfo(function(res){
-        cb(res.info.lan[0].client);
+        cb(res.lan[0].client);
     });
 }
 
