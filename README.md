@@ -1,7 +1,7 @@
 node-neufbox
 ============
 
-Node module to interface with NeufBox v4 API
+Node module to interact with NeufBox v4 API
 
 **This projet is currently in progress, lot of stuff are not implemented yet.**
 
@@ -18,7 +18,7 @@ How to use
 To use, simple require Neufbox module
 ```
 var neufbox = require('node-neufbox');
-````
+```
 
 You can now access to public methods without authentification:
 ```
