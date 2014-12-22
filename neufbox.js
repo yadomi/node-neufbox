@@ -52,8 +52,29 @@ Neufbox.prototype._getToken = function(cb){
     }
 }
 
-Neufbox.prototype.success = function(data){
-    return (data.rsp.$.stat === 'ok');
+Neufbox.prototype.makeRequest = function(method, params, cb){
+    var _this = this;
+    var endpoint = method.split('.')[0];
+    var qs = {
+        method : method,
+        token  : this.token,
+        hash    : this.hash
+    };
+    if (!params) params = {};
+    for (var attrname in qs) { params[attrname] = qs[attrname]; }
+    request.get( {
+        url : this.url + this.version ,
+        qs  : params
+        },
+        function(err, res, xml){
+            _this._toObject(xml, function(data){
+                if(data.rsp.$.stat === 'fail')
+                    typeof cb === 'function' && cb(data.rsp.err[0].$, null);
+                else {
+                    typeof cb === 'function' && cb(null, data.rsp[endpoint][0].$);
+                }
+            });
+    } )
 }
 
 Neufbox.prototype.checkToken = function(cb){
