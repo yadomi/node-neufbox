@@ -26,8 +26,9 @@ Neufbox.prototype.connect = function(auth, cb){
             hash_secret_password = crypto.createHmac('sha256', token).update(hash_password).digest('hex');
 
         _this.hash = hash_secret_username + hash_secret_password;
-        _this.checkToken(function(res, err){
-            typeof cb === 'function' && cb(res, err);
+        _this.checkToken(function(err){
+            if (err) var e = new Error(err.msg);
+            typeof cb === 'function' && cb(e);
         });
     }
 }
@@ -167,7 +168,7 @@ Neufbox.prototype.addDnsHost = function(params, cb){
 
 Neufbox.prototype.getCurrentIP = function(cb){
     this.getInfo(function(res){
-        cb(res.info.ppp[0].ipaddr[0]);
+        cb(res.ppp[0].ipaddr[0]);
     });
 }
 
