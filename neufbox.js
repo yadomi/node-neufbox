@@ -52,7 +52,7 @@ Neufbox.prototype._getToken = function(cb){
     }
 }
 
-Neufbox.prototype.makeRequest = function(method, params, cb){
+Neufbox.prototype._makeRequest = function(method, params, cb){
     var _this = this;
     var endpoint = method.split('.')[0];
     var qs = {
@@ -78,28 +78,9 @@ Neufbox.prototype.makeRequest = function(method, params, cb){
 }
 
 Neufbox.prototype.checkToken = function(cb){
-    var _this = this;
-    request.get( {
-        url : this.url + this.version,
-        qs  : {
-            method : 'auth.checkToken',
-            token  : this.token,
-            hash   : this.hash
-        } }, function(err,res,xml){
-            if(err)
-                return err;
-            _this._toObject(xml, function(data){
-                parseResponse(data);
-            });
+    this._makeRequest('auth.checkToken', {token: this.token, hash: this.hash}, function(err, res){
+        cb(err, res);
     });
-
-    var parseResponse = function(data){
-        if(data.rsp.$.stat === 'fail'){
-            cb(data.rsp.err[0].$, null);
-            return false;
-        }
-        cb(null, data.rsp.auth[0].$);
-    }
 }
 
 Neufbox.prototype.getInfo = function(cb){
