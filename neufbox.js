@@ -88,12 +88,10 @@ Neufbox.prototype.getInfo = function(cb){
     request.get(this.url + this.endpoints.stb, function(err, res, data){
         if(err)
             return err
-        _this._toObject(data, parseResponse);
+        _this._toObject(data, function(data){
+            cb(data.info);
+        });
     });
-
-    var parseResponse = function(data){
-        cb(data.info);
-    }
 }
 
 Neufbox.prototype.getDnsHostList = function(cb){
