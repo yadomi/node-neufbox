@@ -41,3 +41,9 @@ nb.getDnsHostList(function(err, res){
 });
 ```
 
+Changelog
+---------
+
+###0.0.5
+
+- Add generic method `_makeRequest`
