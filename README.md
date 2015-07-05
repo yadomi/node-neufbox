@@ -21,26 +21,26 @@ How to use
 ----------
 
 To use, simple require Neufbox module
-```
+```js
 var neufbox = require('node-neufbox');
 ```
 
 You can now access to public methods without authentification:
-```
+```js
 neufbox.getInfo(function(info){
   console.log(info.iad);
 });
 ```
 
 If you need authentification, use the `connect` method and provide your username and password
-```
+```js
 neufbox.connect( {username: 'admin', password: 'admin'}, function(){
   //do stuff...
 }); 
 ```
 
 Then you can use methods that require authentification:
-```
+```js
 neufbox.getDnsHostList(function(err, res){
     console.log(res);
 });
