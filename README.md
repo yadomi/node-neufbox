@@ -1,6 +1,8 @@
 node-neufbox
 ============
 
+![image](https://david-dm.org/yadomi/node-neufbox.svg)
+
 Node module to interact with NeufBox v4 API
 
 ### Update (2015-07-05)
